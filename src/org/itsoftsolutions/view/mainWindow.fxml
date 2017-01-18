@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import javafx.scene.web.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="497.0" prefWidth="865.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <TreeView fx:id="mailFolderTreeView" layoutX="5.0" layoutY="49.0" prefHeight="442.0" prefWidth="209.0" AnchorPane.bottomAnchor="6.0" AnchorPane.leftAnchor="5.0" AnchorPane.topAnchor="49.0" />
+      <TableView fx:id="emailTableView" layoutX="214.0" layoutY="49.0" prefHeight="200.0" prefWidth="646.0" AnchorPane.leftAnchor="214.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="49.0">
+         <columns>
+            <TableColumn fx:id="subjectCol" prefWidth="291.0" text="Subject" />
+            <TableColumn fx:id="senderCol" prefWidth="228.0" text="Sender" />
+            <TableColumn fx:id="sizeCol" prefWidth="90.0" text="Size" />
+         </columns></TableView>
+      <WebView fx:id="messageRenderer" layoutX="214.0" layoutY="249.0" prefHeight="241.0" prefWidth="646.0" AnchorPane.bottomAnchor="7.0" AnchorPane.leftAnchor="214.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="249.0" />
+      <Button layoutX="214.0" layoutY="14.0" mnemonicParsing="false" onAction="#changeReadAction" text="changeReadProperty" />
+      <Button fx:id="loadData" layoutX="14.0" layoutY="14.0" mnemonicParsing="false" onAction="#loadEmailData" text="Load Data" />
+   </children>
+</AnchorPane>

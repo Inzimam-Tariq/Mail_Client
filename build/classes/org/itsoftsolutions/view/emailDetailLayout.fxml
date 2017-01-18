@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.web.*?>
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <WebView fx:id="popupWebView" layoutX="8.0" layoutY="56.0" prefHeight="338.0" prefWidth="584.0" AnchorPane.bottomAnchor="6.0" AnchorPane.leftAnchor="8.0" AnchorPane.rightAnchor="8.0" AnchorPane.topAnchor="56.0" />
+      <Label fx:id="senderLabel" layoutX="14.0" layoutY="31.0" text="Sender:" />
+      <Label fx:id="subjectLabel" layoutX="13.0" layoutY="14.0" text="Subject:" />
+   </children>
+</AnchorPane>
