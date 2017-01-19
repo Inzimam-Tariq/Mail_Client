@@ -48,7 +48,7 @@ public class EmailDetailController extends AbstractController implements Initial
         
         subjectLabel.setText("Subject: " + selectedMessage.getSubject());
         senderLabel.setText("Sender: " + selectedMessage.getSender());
-        popupWebView.getEngine().loadContent(selectedMessage.getMsgContent());
+//        popupWebView.getEngine().loadContent(selectedMessage.getMsgContent());
 
     }
 

@@ -7,6 +7,7 @@ package org.itsoftsolutions.model;
 
 import java.util.HashMap;
 import javafx.beans.property.SimpleStringProperty;
+import javax.mail.Message;
 import org.itsoftsolutions.controller.table.AbstractTableItem;
 
 /**
@@ -19,14 +20,14 @@ public class EmailMessageBean extends AbstractTableItem {
     private SimpleStringProperty subject;
     private SimpleStringProperty sender;
     private SimpleStringProperty size;
-    private String msgContent;
+    private Message msgRef;
 
-    public EmailMessageBean(String subject, String sender, int size, String msgContent, boolean isRead) {
+    public EmailMessageBean(String subject, String sender, int size, boolean isRead, Message msgRef) {
         super(isRead);
         this.subject = new SimpleStringProperty(subject);
         this.sender = new SimpleStringProperty(sender);
         this.size = new SimpleStringProperty(formatSize(size));
-        this.msgContent = msgContent;
+        this.msgRef = msgRef;
     }
 
     private String formatSize(int size) {
@@ -66,11 +67,8 @@ public class EmailMessageBean extends AbstractTableItem {
         return size.get();
     }
 
-    /**
-     * @return the msgContent
-     */
-    public String getMsgContent() {
-        return msgContent;
+    public Message getMsgRef() {
+        return msgRef;
     }
 
 }

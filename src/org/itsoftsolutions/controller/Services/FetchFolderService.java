@@ -5,8 +5,6 @@
  */
 package org.itsoftsolutions.controller.Services;
 
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javafx.concurrent.Service;
 import javafx.concurrent.Task;
 import javax.mail.Folder;
@@ -14,6 +12,7 @@ import javax.mail.Message;
 import javax.mail.MessagingException;
 import javax.mail.event.MessageCountAdapter;
 import javax.mail.event.MessageCountEvent;
+import javax.swing.JOptionPane;
 import org.itsoftsolutions.controller.ModelAccess;
 import org.itsoftsolutions.model.EmailAccountBean;
 import org.itsoftsolutions.model.folder.EmailFolderBean;
@@ -84,17 +83,16 @@ public class FetchFolderService extends Service<Void> {
     }
 
     public void addMessageListenerToFolder(Folder folder, EmailFolderBean<String> item) {
-//        System.out.println("Add message listener point 1");
         folder.addMessageCountListener(new MessageCountAdapter() {
-            
-            public void messageAdded(MessageCountEvent e) {
+            @Override
+            public void messagesAdded(MessageCountEvent e) {
                 for (int i = 0; i < e.getMessages().length; i++) {
                     try {
                         System.out.println("Add message listener point 2");
                         Message currentMsg = folder.getMessage(folder.getMessageCount() - i);
                         item.addEmail(0, currentMsg);
                     } catch (MessagingException ex) {
-                        Logger.getLogger(FetchFolderService.class.getName()).log(Level.SEVERE, null, ex);
+                        JOptionPane.showMessageDialog(null, "Error Getting new Emails!");
                     }
                 }
             }

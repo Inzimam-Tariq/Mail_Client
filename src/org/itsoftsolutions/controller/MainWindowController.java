@@ -22,6 +22,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.web.WebView;
 import javafx.stage.Stage;
 import org.itsoftsolutions.controller.Services.FolderUpdaterService;
+import org.itsoftsolutions.controller.Services.MessageRendererService;
 import org.itsoftsolutions.controller.Services.RegisterMailAccountService;
 import org.itsoftsolutions.controller.table.BoldableRowFactory;
 import org.itsoftsolutions.model.EmailMessageBean;
@@ -61,6 +62,7 @@ public class MainWindowController extends AbstractController implements Initiali
     private TableColumn<EmailMessageBean, Integer> subjectCol;
     @FXML
     private WebView messageRenderer;
+    private MessageRendererService messageRendererService;
 
     @FXML
     void loadEmailData(ActionEvent event) {
@@ -87,6 +89,7 @@ public class MainWindowController extends AbstractController implements Initiali
     @Override
     @SuppressWarnings({"unchecked"})
     public void initialize(URL location, ResourceBundle resources) {
+        messageRendererService = new MessageRendererService(messageRenderer.getEngine());
 
         FolderUpdaterService folderUpdaterService
                 = new FolderUpdaterService(getModelAccess().getFoldersList());
@@ -115,14 +118,14 @@ public class MainWindowController extends AbstractController implements Initiali
 
         RegisterMailAccountService registerMailAccountService1
                 = new RegisterMailAccountService("inzi.javamailtest@gmail.com",
-                        "Chand-977",
+                        "********",
                         rootItem,
                         getModelAccess());
         registerMailAccountService1.start();
 
         RegisterMailAccountService registerMailAccountService2
                 = new RegisterMailAccountService("inzi.programmer@gmail.com",
-                        "769inzimam-9771",
+                        "********",
                         rootItem,
                         getModelAccess());
 //        registerMailAccountService2.start();
@@ -142,7 +145,8 @@ public class MainWindowController extends AbstractController implements Initiali
             EmailMessageBean message = emailTableView.getSelectionModel().getSelectedItem();
             if (message != null) {
                 getModelAccess().setSelectedMessage(message);
-                messageRenderer.getEngine().loadContent(message.getMsgContent());
+                messageRendererService.setMsgToRender(message);
+                messageRendererService.restart();
             }
         });
         showDetails.setOnAction(e -> {
