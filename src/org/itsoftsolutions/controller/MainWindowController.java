@@ -5,6 +5,7 @@
  */
 package org.itsoftsolutions.controller;
 
+import com.jfoenix.controls.JFXButton;
 import java.net.URL;
 import java.util.Comparator;
 import java.util.ResourceBundle;
@@ -14,7 +15,9 @@ import javafx.fxml.Initializable;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ContextMenu;
+import javafx.scene.control.Label;
 import javafx.scene.control.MenuItem;
+import javafx.scene.control.ProgressBar;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TreeView;
@@ -24,6 +27,7 @@ import javafx.stage.Stage;
 import org.itsoftsolutions.controller.Services.FolderUpdaterService;
 import org.itsoftsolutions.controller.Services.MessageRendererService;
 import org.itsoftsolutions.controller.Services.RegisterMailAccountService;
+import org.itsoftsolutions.controller.Services.SaveAttachmentsService;
 import org.itsoftsolutions.controller.table.BoldableRowFactory;
 import org.itsoftsolutions.model.EmailMessageBean;
 import org.itsoftsolutions.model.folder.EmailFolderBean;
@@ -48,6 +52,8 @@ public class MainWindowController extends AbstractController implements Initiali
 
     @FXML
     private Button loadData;
+    @FXML
+    private JFXButton downAttachBtn;
 
     @FXML
     private TableView<EmailMessageBean> emailTableView;
@@ -60,6 +66,14 @@ public class MainWindowController extends AbstractController implements Initiali
 
     @FXML
     private TableColumn<EmailMessageBean, Integer> subjectCol;
+
+    @FXML
+    private Label downAttchLbl;
+
+    @FXML
+    private ProgressBar downAttchProg;
+    private SaveAttachmentsService saveAttachmentsService;
+
     @FXML
     private WebView messageRenderer;
     private MessageRendererService messageRendererService;
@@ -86,9 +100,21 @@ public class MainWindowController extends AbstractController implements Initiali
         }
     }
 
+    @FXML
+    void downAttachBtnAction(ActionEvent event) {
+        EmailMessageBean msg = emailTableView.getSelectionModel().getSelectedItem();
+        if (msg != null && msg.hasAttachment()) {
+            saveAttachmentsService.setMessageToDownload(msg);
+            saveAttachmentsService.restart();
+        }
+    }
+
     @Override
     @SuppressWarnings({"unchecked"})
     public void initialize(URL location, ResourceBundle resources) {
+        downAttchLbl.setVisible(false);
+        downAttchProg.setVisible(false);
+        saveAttachmentsService = new SaveAttachmentsService(downAttchProg, downAttchLbl);
         messageRendererService = new MessageRendererService(messageRenderer.getEngine());
 
         FolderUpdaterService folderUpdaterService
@@ -118,14 +144,14 @@ public class MainWindowController extends AbstractController implements Initiali
 
         RegisterMailAccountService registerMailAccountService1
                 = new RegisterMailAccountService("inzi.javamailtest@gmail.com",
-                        "********",
+                        "*****",
                         rootItem,
                         getModelAccess());
         registerMailAccountService1.start();
 
         RegisterMailAccountService registerMailAccountService2
                 = new RegisterMailAccountService("inzi.programmer@gmail.com",
-                        "********",
+                        "******",
                         rootItem,
                         getModelAccess());
 //        registerMailAccountService2.start();

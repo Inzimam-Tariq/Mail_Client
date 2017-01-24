@@ -5,9 +5,14 @@
  */
 package org.itsoftsolutions.model;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import javafx.beans.property.SimpleStringProperty;
 import javax.mail.Message;
+import javax.mail.MessagingException;
+import javax.mail.internet.MimeBodyPart;
+import javax.swing.JOptionPane;
 import org.itsoftsolutions.controller.table.AbstractTableItem;
 
 /**
@@ -21,6 +26,9 @@ public class EmailMessageBean extends AbstractTableItem {
     private SimpleStringProperty sender;
     private SimpleStringProperty size;
     private Message msgRef;
+    // Attachments handling 
+    private List<MimeBodyPart> attachmentList = new ArrayList<>();
+    private StringBuffer attachmentNames = new StringBuffer();
 
     public EmailMessageBean(String subject, String sender, int size, boolean isRead, Message msgRef) {
         super(isRead);
@@ -71,4 +79,29 @@ public class EmailMessageBean extends AbstractTableItem {
         return msgRef;
     }
 
+    public List<MimeBodyPart> getAttachmentList() {
+        return attachmentList;
+    }
+
+    public String getAttachmentNames() {
+        return attachmentNames.toString();
+    }
+
+    public void addAttachment(MimeBodyPart mbp) {
+        attachmentList.add(mbp);
+        try {
+            attachmentNames.append(mbp.getFileName()).append(";");
+        } catch (MessagingException ex) {
+            JOptionPane.showMessageDialog(null, "Unable to get attachment file name!");
+        }
+    }
+
+    public boolean hasAttachment() {
+        return attachmentList.size() > 0;
+    }
+    // clear methods:
+    public void clearAttachments(){
+        attachmentList.clear();
+        attachmentNames.setLength(0);
+    }
 }
