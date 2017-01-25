@@ -6,8 +6,10 @@
 package org.itsoftsolutions.model;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
+import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javax.mail.Message;
 import javax.mail.MessagingException;
@@ -26,15 +28,17 @@ public class EmailMessageBean extends AbstractTableItem {
     private SimpleStringProperty sender;
     private SimpleStringProperty size;
     private Message msgRef;
+    private SimpleObjectProperty<Date> date;
     // Attachments handling 
     private List<MimeBodyPart> attachmentList = new ArrayList<>();
     private StringBuffer attachmentNames = new StringBuffer();
 
-    public EmailMessageBean(String subject, String sender, int size, boolean isRead, Message msgRef) {
+    public EmailMessageBean(String subject, String sender, int size, boolean isRead, Date date, Message msgRef) {
         super(isRead);
         this.subject = new SimpleStringProperty(subject);
         this.sender = new SimpleStringProperty(sender);
         this.size = new SimpleStringProperty(formatSize(size));
+        this.date = new SimpleObjectProperty<>(date);
         this.msgRef = msgRef;
     }
 
@@ -103,5 +107,9 @@ public class EmailMessageBean extends AbstractTableItem {
     public void clearAttachments(){
         attachmentList.clear();
         attachmentNames.setLength(0);
+    }
+
+    public Date getDate() {
+        return date.get();
     }
 }

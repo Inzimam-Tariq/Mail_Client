@@ -9,7 +9,7 @@ import javafx.concurrent.Service;
 import javafx.concurrent.Task;
 import org.itsoftsolutions.controller.ModelAccess;
 import org.itsoftsolutions.model.EmailAccountBean;
-import org.itsoftsolutions.model.EmailContants;
+import org.itsoftsolutions.model.EmailConstants;
 import org.itsoftsolutions.model.folder.EmailFolderBean;
 
 /**
@@ -38,7 +38,7 @@ public class RegisterMailAccountService extends Service<Integer> {
             @Override
             protected Integer call() throws Exception {
                 EmailAccountBean emailAccount = new EmailAccountBean(mailAddress, password);
-                if (emailAccount.getLoginState() == EmailContants.LOGIN_STATE_SUCCEEDED) {
+                if (emailAccount.getLoginState() == EmailConstants.LOGIN_STATE_SUCCEEDED) {
                     EmailFolderBean<String> emailFolderBean = new EmailFolderBean<>(mailAddress);
                     folderRoot.getChildren().add(emailFolderBean);
                     FetchFolderService fetchFolderService = new FetchFolderService(emailAccount,

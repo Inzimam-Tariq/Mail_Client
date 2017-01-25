@@ -8,6 +8,7 @@ package org.itsoftsolutions.controller;
 import com.jfoenix.controls.JFXButton;
 import java.net.URL;
 import java.util.Comparator;
+import java.util.Date;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -59,6 +60,9 @@ public class MainWindowController extends AbstractController implements Initiali
     private TableView<EmailMessageBean> emailTableView;
 
     @FXML
+    private TableColumn<EmailMessageBean, Date> dateCol;
+
+    @FXML
     private TableColumn<EmailMessageBean, String> sizeCol;
 
     @FXML
@@ -77,6 +81,14 @@ public class MainWindowController extends AbstractController implements Initiali
     @FXML
     private WebView messageRenderer;
     private MessageRendererService messageRendererService;
+
+    @FXML
+    void composeMailAction(ActionEvent event) {
+        Stage stage = new Stage();
+        Scene scene = viewFactory.getComposeWindowScene();
+        stage.setScene(scene);
+        stage.show();
+    }
 
     @FXML
     void loadEmailData(ActionEvent event) {
@@ -116,6 +128,7 @@ public class MainWindowController extends AbstractController implements Initiali
         downAttchProg.setVisible(false);
         saveAttachmentsService = new SaveAttachmentsService(downAttchProg, downAttchLbl);
         messageRendererService = new MessageRendererService(messageRenderer.getEngine());
+        downAttchProg.progressProperty().bind(saveAttachmentsService.progressProperty());
 
         FolderUpdaterService folderUpdaterService
                 = new FolderUpdaterService(getModelAccess().getFoldersList());
@@ -125,6 +138,7 @@ public class MainWindowController extends AbstractController implements Initiali
         subjectCol.setCellValueFactory(new PropertyValueFactory<>("subject"));
         senderCol.setCellValueFactory(new PropertyValueFactory<>("sender"));
         sizeCol.setCellValueFactory(new PropertyValueFactory<>("size"));
+        dateCol.setCellValueFactory(new PropertyValueFactory<>("date"));
 
         sizeCol.setComparator(new Comparator<String>() {
 
@@ -144,14 +158,14 @@ public class MainWindowController extends AbstractController implements Initiali
 
         RegisterMailAccountService registerMailAccountService1
                 = new RegisterMailAccountService("inzi.javamailtest@gmail.com",
-                        "*****",
+                        "Chand-977",
                         rootItem,
                         getModelAccess());
         registerMailAccountService1.start();
 
         RegisterMailAccountService registerMailAccountService2
                 = new RegisterMailAccountService("inzi.programmer@gmail.com",
-                        "******",
+                        "*****",
                         rootItem,
                         getModelAccess());
 //        registerMailAccountService2.start();

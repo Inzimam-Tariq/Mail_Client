@@ -13,6 +13,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javax.swing.JOptionPane;
 import org.itsoftsolutions.controller.AbstractController;
+import org.itsoftsolutions.controller.ComposeWindowController;
 import org.itsoftsolutions.controller.EmailDetailController;
 import org.itsoftsolutions.controller.MainWindowController;
 import org.itsoftsolutions.controller.ModelAccess;
@@ -28,7 +29,8 @@ public class ViewFactory {
 
     private String OUR_STYLESHEET = "style.css";
     private String EMAIL_DETAIL_FXML = "emailDetailLayout.fxml";
-    private String Main_WINDOW_FXML = "mainWindow.fxml";
+    private String MAIN_WINDOW_FXML = "mainWindow.fxml";
+    private String COMPOSE_WINDOW_FXML = "composeWindow.fxml";
 
     private ModelAccess modelAccess = new ModelAccess();
     private MainWindowController mainWindowController;
@@ -39,13 +41,18 @@ public class ViewFactory {
             mainWindowController = new MainWindowController(modelAccess);
             mainViewInitialized = true;
         }
-        return initializeScene(Main_WINDOW_FXML, mainWindowController);
+        return initializeScene(MAIN_WINDOW_FXML, mainWindowController);
     }
 
     public Scene getEmailDetailScene() {
         emailDetailController = new EmailDetailController(modelAccess);
 
         return initializeScene(EMAIL_DETAIL_FXML, emailDetailController);
+    }
+    
+    public Scene getComposeWindowScene(){
+        AbstractController composeController = new ComposeWindowController(modelAccess);
+        return initializeScene(COMPOSE_WINDOW_FXML, composeController);
     }
 
     private Scene initializeScene(String fxmlPath, AbstractController controller) {

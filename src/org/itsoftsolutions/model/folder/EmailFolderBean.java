@@ -72,6 +72,7 @@ public class EmailFolderBean<T> extends TreeItem<String> {
                     msg.getFrom()[0].toString(),
                     msg.getSize(),
                     isRead,
+                    msg.getSentDate(),
                     msg);
             if (position < 0) {
                 getData().add(emailMessageBean);

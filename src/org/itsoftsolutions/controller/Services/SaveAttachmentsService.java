@@ -5,11 +5,14 @@
  */
 package org.itsoftsolutions.controller.Services;
 
+import java.io.IOException;
 import javafx.concurrent.Service;
 import javafx.concurrent.Task;
 import javafx.scene.control.Label;
 import javafx.scene.control.ProgressBar;
+import javax.mail.MessagingException;
 import javax.mail.internet.MimeBodyPart;
+import javax.swing.JOptionPane;
 import org.itsoftsolutions.model.EmailMessageBean;
 
 /**
@@ -23,7 +26,7 @@ public class SaveAttachmentsService extends Service<Void> {
     private ProgressBar progressBar;
     private Label label;
 
-    public SaveAttachmentsService(ProgressBar progressBar, Label label) {        
+    public SaveAttachmentsService(ProgressBar progressBar, Label label) {
         this.progressBar = progressBar;
         this.label = label;
         this.setOnRunning(e -> {
@@ -39,9 +42,17 @@ public class SaveAttachmentsService extends Service<Void> {
         return new Task<Void>() {
 
             @Override
-            protected Void call() throws Exception {
+            protected Void call()  {
                 for (MimeBodyPart mbp : msgToDownload.getAttachmentList()) {
-                    mbp.saveFile(DOWNLOAD_LOCATION + mbp.getFileName());
+                    try {
+                        updateProgress(msgToDownload.getAttachmentList().indexOf(mbp),
+                                msgToDownload.getAttachmentList().size());
+                        mbp.saveFile(DOWNLOAD_LOCATION + mbp.getFileName());
+                    } catch (MessagingException ex) {
+                        JOptionPane.showMessageDialog(null, "unable to get attachments");
+                    } catch (IOException ex) {
+                        JOptionPane.showMessageDialog(null, "Bad Download Path");
+                    }
                 }
 
                 return null;

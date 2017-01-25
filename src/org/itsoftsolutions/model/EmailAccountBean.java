@@ -21,12 +21,11 @@ public class EmailAccountBean {
 
     private Store store;
     private Session session;
-    private int loginState = EmailContants.LOGIN_STATE_NOT_READY;
+    private int loginState = EmailConstants.LOGIN_STATE_NOT_READY;
 
 //    public String getMailAddress() {
 //        return mailAddress;
 //    }
-
     public Properties getProperties() {
         return props;
     }
@@ -54,16 +53,16 @@ public class EmailAccountBean {
 //        props.put("mail.smtps.auth", "true");
 //        props.put("incomingHost", "imap.gmail.com");
 //        props.put("outgoingHost", "smtp.gmail.com");
-        
+
         try {
-            this.session = Session.getInstance(props,null);
+            this.session = Session.getInstance(props, null);
             store = session.getStore("imaps");
             store.connect("smtp.gmail.com", mailAddress, password);
             System.out.println("Successful Authentication!");
-            loginState = EmailContants.LOGIN_STATE_SUCCEEDED;
+            loginState = EmailConstants.LOGIN_STATE_SUCCEEDED;
         } catch (Exception e) {
             e.printStackTrace();
-            loginState = EmailContants.LOGIN_STATE_FAILED_BY_CREDENTIALS;
+            loginState = EmailConstants.LOGIN_STATE_FAILED_BY_CREDENTIALS;
         }
 
     }
