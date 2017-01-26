@@ -29,7 +29,7 @@ public class ViewFactory {
 
     private String OUR_STYLESHEET = "style.css";
     private String EMAIL_DETAIL_FXML = "emailDetailLayout.fxml";
-    private String MAIN_WINDOW_FXML = "mainWindow.fxml";
+    private String MAIN_WINDOW_FXML = "mainWindowOptimized.fxml";
     private String COMPOSE_WINDOW_FXML = "composeWindow.fxml";
 
     private ModelAccess modelAccess = new ModelAccess();

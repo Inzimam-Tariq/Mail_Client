@@ -7,7 +7,6 @@ package org.itsoftsolutions.model;
 
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
@@ -16,6 +15,7 @@ import javax.mail.MessagingException;
 import javax.mail.internet.MimeBodyPart;
 import javax.swing.JOptionPane;
 import org.itsoftsolutions.controller.table.AbstractTableItem;
+import org.itsoftsolutions.controller.table.formatedSize;
 
 /**
  *
@@ -23,10 +23,9 @@ import org.itsoftsolutions.controller.table.AbstractTableItem;
  */
 public class EmailMessageBean extends AbstractTableItem {
 
-    public static HashMap<String, Integer> formattedSize = new HashMap<>();
     private SimpleStringProperty subject;
     private SimpleStringProperty sender;
-    private SimpleStringProperty size;
+    private SimpleObjectProperty<formatedSize> size;
     private Message msgRef;
     private SimpleObjectProperty<Date> date;
     // Attachments handling 
@@ -37,25 +36,9 @@ public class EmailMessageBean extends AbstractTableItem {
         super(isRead);
         this.subject = new SimpleStringProperty(subject);
         this.sender = new SimpleStringProperty(sender);
-        this.size = new SimpleStringProperty(formatSize(size));
+        this.size = new SimpleObjectProperty<>(new formatedSize(size));
         this.date = new SimpleObjectProperty<>(date);
         this.msgRef = msgRef;
-    }
-
-    private String formatSize(int size) {
-        StringBuilder returnVal = new StringBuilder();
-        int unit = 1024;
-        if (size <= 0) {
-            returnVal.append("0");
-        } else if (size < unit) {
-            returnVal.append(size).append("B");
-        } else if (size < (Math.pow(unit, 2))) {
-            returnVal.append(size / unit).append("KB");
-        } else {
-            returnVal.append(size / (int) Math.pow(unit, 2)).append("MB");
-        }
-        formattedSize.put(returnVal.toString(), size);
-        return returnVal.toString();
     }
 
     /**
@@ -75,7 +58,7 @@ public class EmailMessageBean extends AbstractTableItem {
     /**
      * @return the size
      */
-    public String getSize() {
+    public formatedSize getSize() {
         return size.get();
     }
 
@@ -103,8 +86,10 @@ public class EmailMessageBean extends AbstractTableItem {
     public boolean hasAttachment() {
         return attachmentList.size() > 0;
     }
+
     // clear methods:
-    public void clearAttachments(){
+
+    public void clearAttachments() {
         attachmentList.clear();
         attachmentNames.setLength(0);
     }

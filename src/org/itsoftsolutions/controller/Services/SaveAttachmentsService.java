@@ -8,8 +8,7 @@ package org.itsoftsolutions.controller.Services;
 import java.io.IOException;
 import javafx.concurrent.Service;
 import javafx.concurrent.Task;
-import javafx.scene.control.Label;
-import javafx.scene.control.ProgressBar;
+import javafx.scene.layout.VBox;
 import javax.mail.MessagingException;
 import javax.mail.internet.MimeBodyPart;
 import javax.swing.JOptionPane;
@@ -23,12 +22,10 @@ public class SaveAttachmentsService extends Service<Void> {
 
     private String DOWNLOAD_LOCATION = System.getProperty("user.home") + "/Downloads/Mail Client Test/";
     private EmailMessageBean msgToDownload;
-    private ProgressBar progressBar;
-    private Label label;
+    private VBox progPanel;
 
-    public SaveAttachmentsService(ProgressBar progressBar, Label label) {
-        this.progressBar = progressBar;
-        this.label = label;
+    public SaveAttachmentsService( VBox progPanel) {
+        this.progPanel = progPanel;
         this.setOnRunning(e -> {
             showProgressBar(true);
         });
@@ -66,8 +63,7 @@ public class SaveAttachmentsService extends Service<Void> {
     }
 
     private void showProgressBar(boolean show) {
-        progressBar.setVisible(show);
-        label.setVisible(show);
+        progPanel.setVisible(show);
     }
 
 }

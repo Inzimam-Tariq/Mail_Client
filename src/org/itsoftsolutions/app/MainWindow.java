@@ -24,6 +24,9 @@ public class MainWindow extends Application {
         Scene scene = viewFactory.getMainWindowScene();
 
         stage.setScene(scene);
+        stage.heightProperty().addListener((obs, oldVal, newVal) -> {
+//        Do whatever you want
+        });
 //        stage.setMaximized(true);
         stage.show();
     }

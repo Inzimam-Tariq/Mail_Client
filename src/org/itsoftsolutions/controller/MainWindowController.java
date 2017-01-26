@@ -7,7 +7,6 @@ package org.itsoftsolutions.controller;
 
 import com.jfoenix.controls.JFXButton;
 import java.net.URL;
-import java.util.Comparator;
 import java.util.Date;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
@@ -19,10 +18,12 @@ import javafx.scene.control.ContextMenu;
 import javafx.scene.control.Label;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.ProgressBar;
+import javafx.scene.control.SplitPane;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TreeView;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.layout.VBox;
 import javafx.scene.web.WebView;
 import javafx.stage.Stage;
 import org.itsoftsolutions.controller.Services.FolderUpdaterService;
@@ -30,6 +31,7 @@ import org.itsoftsolutions.controller.Services.MessageRendererService;
 import org.itsoftsolutions.controller.Services.RegisterMailAccountService;
 import org.itsoftsolutions.controller.Services.SaveAttachmentsService;
 import org.itsoftsolutions.controller.table.BoldableRowFactory;
+import org.itsoftsolutions.controller.table.formatedSize;
 import org.itsoftsolutions.model.EmailMessageBean;
 import org.itsoftsolutions.model.folder.EmailFolderBean;
 import org.itsoftsolutions.view.ViewFactory;
@@ -63,7 +65,7 @@ public class MainWindowController extends AbstractController implements Initiali
     private TableColumn<EmailMessageBean, Date> dateCol;
 
     @FXML
-    private TableColumn<EmailMessageBean, String> sizeCol;
+    private TableColumn<EmailMessageBean, formatedSize> sizeCol;
 
     @FXML
     private TableColumn<EmailMessageBean, String> senderCol;
@@ -75,11 +77,18 @@ public class MainWindowController extends AbstractController implements Initiali
     private Label downAttchLbl;
 
     @FXML
+    private VBox downProgPanel;
+
+    @FXML
+    private SplitPane folderMailViewSplit, tableAndMsgViewSplit;
+
+    @FXML
     private ProgressBar downAttchProg;
     private SaveAttachmentsService saveAttachmentsService;
 
     @FXML
     private WebView messageRenderer;
+
     private MessageRendererService messageRendererService;
 
     @FXML
@@ -122,11 +131,17 @@ public class MainWindowController extends AbstractController implements Initiali
     }
 
     @Override
-    @SuppressWarnings({"unchecked"})
+
     public void initialize(URL location, ResourceBundle resources) {
-        downAttchLbl.setVisible(false);
-        downAttchProg.setVisible(false);
-        saveAttachmentsService = new SaveAttachmentsService(downAttchProg, downAttchLbl);
+
+//        downAttchLbl.setVisible(false);
+//        downAttchProg.setVisible(false);
+        boolean showSplitView = true;
+        if (showSplitView) {
+            tableAndMsgViewSplit.setDividerPositions(1);
+        }
+
+        saveAttachmentsService = new SaveAttachmentsService(downProgPanel);
         messageRendererService = new MessageRendererService(messageRenderer.getEngine());
         downAttchProg.progressProperty().bind(saveAttachmentsService.progressProperty());
 
@@ -140,19 +155,11 @@ public class MainWindowController extends AbstractController implements Initiali
         sizeCol.setCellValueFactory(new PropertyValueFactory<>("size"));
         dateCol.setCellValueFactory(new PropertyValueFactory<>("date"));
 
-        sizeCol.setComparator(new Comparator<String>() {
+        // BUG: size column doesn't get it's default comparator overriden
+        // so we have to do it manually 
+        sizeCol.setComparator(new formatedSize(0));
 
-            Integer int1, int2;
-
-            @Override
-            public int compare(String str1, String str2) {
-                int1 = EmailMessageBean.formattedSize.get(str1);
-                int2 = EmailMessageBean.formattedSize.get(str2);
-                return int1.compareTo(int2);
-            }
-        });
-
-        EmailFolderBean<String> rootItem = new EmailFolderBean("");
+        EmailFolderBean<String> rootItem = new EmailFolderBean<>("");
         mailFolderTreeView.setRoot(rootItem);
         mailFolderTreeView.setShowRoot(false);
 
@@ -172,6 +179,7 @@ public class MainWindowController extends AbstractController implements Initiali
         emailTableView.setContextMenu(new ContextMenu(showDetails));
 
         mailFolderTreeView.setOnMouseClicked(e -> {
+            @SuppressWarnings("unchecked")
             EmailFolderBean<String> item
                     = (EmailFolderBean) mailFolderTreeView.getSelectionModel().getSelectedItem();
             if (item != null && !item.isTopElement()) {
@@ -182,6 +190,7 @@ public class MainWindowController extends AbstractController implements Initiali
             }
         });
         emailTableView.setOnMouseClicked(e -> {
+            tableAndMsgViewSplit.setDividerPositions(0);
             EmailMessageBean message = emailTableView.getSelectionModel().getSelectedItem();
             if (message != null) {
                 getModelAccess().setSelectedMessage(message);
