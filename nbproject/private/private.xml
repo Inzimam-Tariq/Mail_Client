@@ -4,15 +4,11 @@
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
             <file>file:/C:/Users/Inzimam/Documents/NetBeansProjects/Mail_Client/src/org/itsoftsolutions/controller/MainWindowController.java</file>
-            <file>file:/C:/Users/Inzimam/Documents/NetBeansProjects/Mail_Client/src/org/itsoftsolutions/view/mainWindowOptimized.fxml</file>
-            <file>file:/C:/Users/Inzimam/Documents/NetBeansProjects/Mail_Client/src/org/itsoftsolutions/controller/AbstractController.java</file>
-            <file>file:/C:/Users/Inzimam/Documents/NetBeansProjects/Mail_Client/src/org/itsoftsolutions/controller/table/formatedSize.java</file>
-            <file>file:/C:/Users/Inzimam/Documents/NetBeansProjects/Mail_Client/src/org/itsoftsolutions/controller/ModelAccess.java</file>
+            <file>file:/C:/Users/Inzimam/Documents/NetBeansProjects/Mail_Client/src/org/itsoftsolutions/controller/LoginController.java</file>
+            <file>file:/C:/Users/Inzimam/Documents/NetBeansProjects/Mail_Client/src/org/itsoftsolutions/controller/ConfigureAccountsController.java</file>
             <file>file:/C:/Users/Inzimam/Documents/NetBeansProjects/Mail_Client/src/org/itsoftsolutions/view/ViewFactory.java</file>
-            <file>file:/C:/Users/Inzimam/Documents/NetBeansProjects/Mail_Client/src/org/itsoftsolutions/controller/Services/SaveAttachmentsService.java</file>
-            <file>file:/C:/Users/Inzimam/Documents/NetBeansProjects/Mail_Client/src/org/itsoftsolutions/model/EmailMessageBean.java</file>
-            <file>file:/C:/Users/Inzimam/Documents/NetBeansProjects/Mail_Client/src/org/itsoftsolutions/controller/Services/MessageRendererService.java</file>
-            <file>file:/C:/Users/Inzimam/Documents/NetBeansProjects/Mail_Client/src/org/itsoftsolutions/app/MainWindow.java</file>
+            <file>file:/C:/Users/Inzimam/Documents/NetBeansProjects/Mail_Client/src/org/itsoftsolutions/controller/helpingClasses/FetchDBData.java</file>
+            <file>file:/C:/Users/Inzimam/Documents/NetBeansProjects/Mail_Client/src/org/itsoftsolutions/model/ConfigureAccountBean.java</file>
         </group>
     </open-files>
 </project-private>

@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.effect.*?>
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import com.jfoenix.controls.*?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="560.0" prefWidth="706.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <AnchorPane prefHeight="553.0" prefWidth="656.0" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="25.0" AnchorPane.rightAnchor="25.0" AnchorPane.topAnchor="25.0">
+         <children>
+            <SplitPane dividerPositions="0.5" orientation="VERTICAL" prefHeight="484.0" prefWidth="656.0" AnchorPane.bottomAnchor="51.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+               <items>
+                  <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0">
+                     <children>
+                        <TableView id="tableView1" fx:id="accTable" prefHeight="240.0" prefWidth="640.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                           <columns>
+                              <TableColumn fx:id="colId" maxWidth="500.0" prefWidth="75.0" text="Id" />
+                              <TableColumn fx:id="colMailId" maxWidth="1750.0" minWidth="70.0" prefWidth="175.0" text="Mail Id" />
+                              <TableColumn fx:id="colPass" maxWidth="750.0" minWidth="40.0" prefWidth="75.0" text="Password" />
+                              <TableColumn fx:id="colDisplayName" maxWidth="1200.0" minWidth="50.0" prefWidth="158.0" text="Display Name" />
+                           </columns>
+                           <columnResizePolicy>
+                              <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+                           </columnResizePolicy>
+                        </TableView>
+                     </children>
+                  </AnchorPane>
+                  <AnchorPane fx:id="accInputPane" minHeight="0.0" minWidth="0.0" prefHeight="217.0" prefWidth="640.0" style="-fx-background-color: #ffffff;">
+                     <children>
+                        <HBox id="HBox" alignment="CENTER" layoutX="14.0" layoutY="22.0" prefHeight="25.0" prefWidth="612.0" spacing="5.0" AnchorPane.leftAnchor="14.0" AnchorPane.rightAnchor="14.0">
+                           <children>
+                              <Label id="label4" minWidth="-Infinity" prefHeight="17.0" prefWidth="80.0" text="Email Id:" />
+                              <JFXTextField id="textField1" fx:id="mailIdField" focusColor="#09b6bc" labelFloat="true" promptText="Enter mail id" HBox.hgrow="ALWAYS">
+                                 <cursor>
+                                    <Cursor fx:constant="HAND" />
+                                 </cursor>
+                              </JFXTextField>
+                           </children>
+                        </HBox>
+                        <HBox id="HBox" alignment="CENTER" layoutX="14.0" layoutY="75.0" prefHeight="25.0" prefWidth="612.0" spacing="5.0" AnchorPane.leftAnchor="14.0" AnchorPane.rightAnchor="14.0">
+                           <children>
+                              <Label id="label4" minWidth="-Infinity" prefHeight="17.0" prefWidth="80.0" text="Password:" />
+                              <JFXPasswordField id="textField1" fx:id="passField" focusColor="#09b6bc" labelFloat="true" promptText="Enter mail password" HBox.hgrow="ALWAYS">
+                                 <cursor>
+                                    <Cursor fx:constant="HAND" />
+                                 </cursor>
+                              </JFXPasswordField>
+                           </children>
+                        </HBox>
+                        <HBox id="HBox" alignment="CENTER" layoutX="14.0" layoutY="130.0" prefHeight="25.0" prefWidth="612.0" spacing="5.0" AnchorPane.leftAnchor="14.0" AnchorPane.rightAnchor="14.0">
+                           <children>
+                              <Label id="label5" minWidth="-Infinity" prefHeight="17.0" prefWidth="80.0" text="Re-type Password:" />
+                              <JFXPasswordField id="textField1" fx:id="reTypePassField" focusColor="#09b6bc" labelFloat="true" promptText="Enter mail password" HBox.hgrow="ALWAYS">
+                                 <cursor>
+                                    <Cursor fx:constant="HAND" />
+                                 </cursor>
+                              </JFXPasswordField>
+                           </children>
+                        </HBox>
+                        <HBox id="HBox" fx:id="displayNameBox" alignment="CENTER" layoutX="13.0" layoutY="180.0" prefHeight="31.0" prefWidth="549.0" spacing="5.0" AnchorPane.leftAnchor="14.0" AnchorPane.rightAnchor="14.0">
+                           <children>
+                              <Label id="label4" minWidth="-Infinity" prefHeight="17.0" prefWidth="80.0" text="Display Name:" />
+                              <JFXTextField id="textField1" fx:id="displayNameField" focusColor="#09b6bc" labelFloat="true" promptText="Optional : Enter Display Name / Name that will display to mail recepient" HBox.hgrow="ALWAYS">
+                                 <cursor>
+                                    <Cursor fx:constant="HAND" />
+                                 </cursor>
+                              </JFXTextField>
+                           </children>
+                        </HBox>
+                     </children>
+                  </AnchorPane>
+               </items>
+            </SplitPane>
+            <HBox alignment="CENTER" layoutX="1.0" layoutY="484.0" prefHeight="46.0" prefWidth="592.0" spacing="10.0" style="-fx-background-color: #ffffff;" AnchorPane.bottomAnchor="4.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
+               <children>
+                  <JFXButton fx:id="newAccBtn" layoutX="146.0" layoutY="201.0" onAction="#newAccBtn" prefHeight="31.0" prefWidth="100.0" style="-fx-background-color: #09b6bc;" text="New Account" wrapText="true" />
+                  <JFXButton fx:id="saveAccBtn" layoutX="289.0" layoutY="201.0" onAction="#saveAccAction" prefHeight="31.0" prefWidth="100.0" style="-fx-background-color: #09b6bc;" text="Save Account" wrapText="true" />
+                  <JFXButton fx:id="delAccBtn" layoutX="417.0" layoutY="201.0" onAction="#delAccAction" prefHeight="31.0" prefWidth="107.0" style="-fx-background-color: #09b6bc;" text="Delete Account" wrapText="true" />
+               </children>
+            </HBox>
+         </children>
+         <effect>
+            <DropShadow />
+         </effect>
+      </AnchorPane>
+   </children>
+</AnchorPane>

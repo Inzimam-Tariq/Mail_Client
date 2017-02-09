@@ -48,49 +48,58 @@ public class MainWindowController extends AbstractController implements Initiali
 
     ViewFactory viewFactory = ViewFactory.defaultFactory;
 
-    @FXML
-    private TreeView<String> mailFolderTreeView;
-
+//  Manubar related components
     private MenuItem showDetails = new MenuItem("Show Details");
+    @FXML
+    private MenuItem menuConfig;
 
+//  Main Anchorpane related components    
     @FXML
     private Button loadData;
-    @FXML
-    private JFXButton downAttachBtn;
-
-    @FXML
-    private TableView<EmailMessageBean> emailTableView;
-
-    @FXML
-    private TableColumn<EmailMessageBean, Date> dateCol;
-
-    @FXML
-    private TableColumn<EmailMessageBean, formatedSize> sizeCol;
-
-    @FXML
-    private TableColumn<EmailMessageBean, String> senderCol;
-
-    @FXML
-    private TableColumn<EmailMessageBean, Integer> subjectCol;
-
-    @FXML
-    private Label downAttchLbl;
-
+    //  Download progress related components    
     @FXML
     private VBox downProgPanel;
-
+    @FXML
+    private Label downAttchLbl;
+    @FXML
+    private ProgressBar downAttchProg;
+    @FXML
+    private JFXButton downAttachBtn;
     @FXML
     private SplitPane folderMailViewSplit, tableAndMsgViewSplit;
 
+//  Folder TreeView related components    
     @FXML
-    private ProgressBar downAttchProg;
-    private SaveAttachmentsService saveAttachmentsService;
+    private TreeView<String> mailFolderTreeView;
 
+//  Email TableView related components    
+    @FXML
+    private TableView<EmailMessageBean> emailTableView;
+    @FXML
+    private TableColumn<EmailMessageBean, Integer> subjectCol;
+    @FXML
+    private TableColumn<EmailMessageBean, String> senderCol;
+    @FXML
+    private TableColumn<EmailMessageBean, formatedSize> sizeCol;
+    @FXML
+    private TableColumn<EmailMessageBean, Date> dateCol;
+
+//  WebView related components    
     @FXML
     private WebView messageRenderer;
 
+//  Services and Classes related components    
+    private SaveAttachmentsService saveAttachmentsService;
     private MessageRendererService messageRendererService;
 
+//  Action in Main Window
+    @FXML
+    void menuConfigAction(ActionEvent event) {
+        Stage stage = new Stage();
+        Scene scene = viewFactory.getConfigurationWindowScene();
+        stage.setScene(scene);
+        stage.show();
+    }
     @FXML
     void composeMailAction(ActionEvent event) {
         Stage stage = new Stage();
@@ -131,16 +140,14 @@ public class MainWindowController extends AbstractController implements Initiali
     }
 
     @Override
-
     public void initialize(URL location, ResourceBundle resources) {
 
 //        downAttchLbl.setVisible(false);
 //        downAttchProg.setVisible(false);
-        boolean showSplitView = true;
-        if (showSplitView) {
-            tableAndMsgViewSplit.setDividerPositions(1);
-        }
-
+//        boolean showSplitView = true;
+//        if (showSplitView) {
+//            tableAndMsgViewSplit.setDividerPositions(1);
+//        }
         saveAttachmentsService = new SaveAttachmentsService(downProgPanel);
         messageRendererService = new MessageRendererService(messageRenderer.getEngine());
         downAttchProg.progressProperty().bind(saveAttachmentsService.progressProperty());
@@ -165,7 +172,7 @@ public class MainWindowController extends AbstractController implements Initiali
 
         RegisterMailAccountService registerMailAccountService1
                 = new RegisterMailAccountService("inzi.javamailtest@gmail.com",
-                        "Chand-977",
+                        "******",
                         rootItem,
                         getModelAccess());
         registerMailAccountService1.start();
@@ -190,7 +197,7 @@ public class MainWindowController extends AbstractController implements Initiali
             }
         });
         emailTableView.setOnMouseClicked(e -> {
-            tableAndMsgViewSplit.setDividerPositions(0);
+//            tableAndMsgViewSplit.setDividerPositions(0);
             EmailMessageBean message = emailTableView.getSelectionModel().getSelectedItem();
             if (message != null) {
                 getModelAccess().setSelectedMessage(message);

@@ -10,6 +10,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import org.itsoftsolutions.view.ViewFactory;
 
 /**
  *
@@ -19,8 +20,9 @@ public class Login extends Application {
     
     @Override
     public void start(Stage stage) throws Exception {
-        stage.setTitle("IMail Login");
-        Parent root = FXMLLoader.load(getClass().getResource("login.fxml"));
+        ViewFactory viewFactory = ViewFactory.defaultFactory;
+        stage.setTitle("Mail Client Login");
+        Parent root = FXMLLoader.load(getClass().getResource("/org/itsoftsolutions/view/login.fxml"));
         
         Scene scene = new Scene(root);
 //        stage.setFullScreen(true);         

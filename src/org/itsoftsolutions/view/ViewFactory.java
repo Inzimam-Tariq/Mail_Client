@@ -14,6 +14,7 @@ import javafx.scene.image.ImageView;
 import javax.swing.JOptionPane;
 import org.itsoftsolutions.controller.AbstractController;
 import org.itsoftsolutions.controller.ComposeWindowController;
+import org.itsoftsolutions.controller.ConfigureAccountsController;
 import org.itsoftsolutions.controller.EmailDetailController;
 import org.itsoftsolutions.controller.MainWindowController;
 import org.itsoftsolutions.controller.ModelAccess;
@@ -28,13 +29,20 @@ public class ViewFactory {
     private static boolean mainViewInitialized = false;
 
     private String OUR_STYLESHEET = "style.css";
-    private String EMAIL_DETAIL_FXML = "emailDetailLayout.fxml";
+    private String LOGIN_WINDOW_FXML = "login.fxml";
     private String MAIN_WINDOW_FXML = "mainWindowOptimized.fxml";
+    private String EMAIL_DETAIL_FXML = "emailDetailLayout.fxml";    
     private String COMPOSE_WINDOW_FXML = "composeWindow.fxml";
+    private String CONFIG_WINDOW_FXML = "configureAccounts.fxml";
 
     private ModelAccess modelAccess = new ModelAccess();
     private MainWindowController mainWindowController;
     private EmailDetailController emailDetailController;
+    
+//    public Scene getLoginScene(){
+//        AbstractController loginController = new LoginController(modelAccess);
+//        return initializeScene(LOGIN_WINDOW_FXML, loginController);
+//    }
 
     public Scene getMainWindowScene(){
         if (!mainViewInitialized) {
@@ -46,8 +54,12 @@ public class ViewFactory {
 
     public Scene getEmailDetailScene() {
         emailDetailController = new EmailDetailController(modelAccess);
-
         return initializeScene(EMAIL_DETAIL_FXML, emailDetailController);
+    }
+    
+    public Scene getConfigurationWindowScene(){
+        AbstractController configAccController = new ConfigureAccountsController(modelAccess);
+        return initializeScene(CONFIG_WINDOW_FXML, configAccController);
     }
     
     public Scene getComposeWindowScene(){

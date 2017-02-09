@@ -8,13 +8,15 @@
   </information>
   <resources>
     <j2se version="1.6+" href="http://java.sun.com/products/autodl/j2se"/>
-    <jar href="Mail_Client.jar" size="66232" download="eager" />
+    <jar href="Mail_Client.jar" size="75095" download="eager" />
+    <jar href="lib/controlsfx-8.40.12.jar" size="996389" download="eager" />
+    <jar href="lib/derbyclient.jar" size="585704" download="eager" />
     <jar href="lib/javax.mail-1.5.6.jar" size="608084" download="eager" />
     <jar href="lib/jfoenix-1.0.0.jar" size="2186636" download="eager" />
   </resources>
   <applet-desc  width="800" height="600" main-class="com.javafx.main.NoJavaFXFallback"  name="Mail Client" >
     <param name="requiredFXVersion" value="8.0+"/>
   </applet-desc>
-  <jfx:javafx-desc  width="800" height="600" main-class="org.itsoftsolutions.app.MainWindow"  name="Mail Client" />
+  <jfx:javafx-desc  width="800" height="600" main-class="org.itsoftsolutions.app.Login"  name="Mail Client" />
   <update check="always"/>
 </jnlp>
