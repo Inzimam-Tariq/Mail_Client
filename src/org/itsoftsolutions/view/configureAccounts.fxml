@@ -21,6 +21,7 @@
                               <TableColumn fx:id="colId" maxWidth="500.0" prefWidth="75.0" text="Id" />
                               <TableColumn fx:id="colMailId" maxWidth="1750.0" minWidth="70.0" prefWidth="175.0" text="Mail Id" />
                               <TableColumn fx:id="colPass" maxWidth="750.0" minWidth="40.0" prefWidth="75.0" text="Password" />
+                              <TableColumn fx:id="colServerName" maxWidth="500.0" minWidth="40.0" prefWidth="75.0" text="Server" />
                               <TableColumn fx:id="colDisplayName" maxWidth="1200.0" minWidth="50.0" prefWidth="158.0" text="Display Name" />
                            </columns>
                            <columnResizePolicy>
@@ -53,12 +54,12 @@
                         </HBox>
                         <HBox id="HBox" alignment="CENTER" layoutX="14.0" layoutY="130.0" prefHeight="25.0" prefWidth="612.0" spacing="5.0" AnchorPane.leftAnchor="14.0" AnchorPane.rightAnchor="14.0">
                            <children>
-                              <Label id="label5" minWidth="-Infinity" prefHeight="17.0" prefWidth="80.0" text="Re-type Password:" />
-                              <JFXPasswordField id="textField1" fx:id="reTypePassField" focusColor="#09b6bc" labelFloat="true" promptText="Enter mail password" HBox.hgrow="ALWAYS">
+                              <Label id="label5" minWidth="-Infinity" prefHeight="17.0" prefWidth="80.0" text="Server:" />
+                              <JFXTextField id="textField1" fx:id="serverNameField" focusColor="#09b6bc" labelFloat="true" promptText="Enter mail service provider i.e. gmail/outlook etc." HBox.hgrow="ALWAYS">
                                  <cursor>
                                     <Cursor fx:constant="HAND" />
                                  </cursor>
-                              </JFXPasswordField>
+                              </JFXTextField>
                            </children>
                         </HBox>
                         <HBox id="HBox" fx:id="displayNameBox" alignment="CENTER" layoutX="13.0" layoutY="180.0" prefHeight="31.0" prefWidth="549.0" spacing="5.0" AnchorPane.leftAnchor="14.0" AnchorPane.rightAnchor="14.0">

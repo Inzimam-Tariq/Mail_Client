@@ -18,6 +18,8 @@ import org.itsoftsolutions.view.ViewFactory;
  */
 public class Login extends Application {
     
+    
+    
     @Override
     public void start(Stage stage) throws Exception {
         ViewFactory viewFactory = ViewFactory.defaultFactory;

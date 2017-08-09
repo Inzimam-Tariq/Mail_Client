@@ -10,6 +10,7 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import javafx.scene.control.Alert;
 import javax.swing.JOptionPane;
 
 /**
@@ -18,24 +19,44 @@ import javax.swing.JOptionPane;
  */
 public class FetchDBData {
 
+    private final String MAIL_ACC_TABLENAME = "MAIL_ACCOUNTS";
+    private final String LOGIN_TABLENAME = "LOGIN_TABLE";
+
     private String dbPath = "jdbc:derby://localhost:1527/mail_client_db";
     private Statement st;
     private ResultSet res;
     private Connection con;
+    
+    private ShowDialog dialog;
 
     public FetchDBData() {
         try {
             Class.forName("org.apache.derby.jdbc.ClientDriver");
         } catch (ClassNotFoundException cnfe) {
-            JOptionPane.showMessageDialog(null, "Derby driver not found!");
+            dialog.show(Alert.AlertType.ERROR,
+                    "Error",
+                    "ClassNotFoundException",
+                    "Derby driver not found!");
         }
         try {
             con = DriverManager.getConnection(dbPath,
                     "Inzimam", "769inzi");
             st = con.createStatement();
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(null, "Your DB credentials are not correct!");
+            dialog.show(Alert.AlertType.ERROR,
+                    "Error",
+                    "Exception Connecting to DB",
+                    "Your DB credentials are not correct!");
         }
+    }
+//    Getters for global fields
+
+    public String getMailAccTableName() {
+        return MAIL_ACC_TABLENAME;
+    }
+
+    public String getLoginTableName() {
+        return LOGIN_TABLENAME;
     }
 
     public ResultSet getResultSet(String tableName) {
@@ -44,6 +65,17 @@ public class FetchDBData {
         } catch (SQLException ex) {
             ex.printStackTrace();
             JOptionPane.showMessageDialog(null, "Table not found");
+            res = null;
+        }
+        return res;
+    }
+
+    public ResultSet getResultSet(String tableName, String whereCon) {
+        try {
+            res = st.executeQuery("SELECT * FROM Inzimam." + tableName + " WHERE " + whereCon);
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+            JOptionPane.showMessageDialog(null, "Table not found\n" + ex);
             res = null;
         }
         return res;
@@ -77,9 +109,9 @@ public class FetchDBData {
         return lastId;
     }
 
-    public boolean StoreSignUpInfo(String tableName, String uname, String upass) {
+    public boolean StoreSignUpInfo(String uname, String upass) {
         try {
-            st.execute("insert into " + tableName + " (uname, upass) "
+            st.execute("insert into " + getLoginTableName() + " (uname, upass) "
                     + "values('" + uname + "', '" + upass + "')");
             return true;
         } catch (SQLException ex) {
@@ -91,7 +123,7 @@ public class FetchDBData {
     public boolean configureMailAccount(String mail, String pass, String dispName) {
         try {
             st.execute("insert into mail_accounts (acc_mail, acc_pass, acc_disp_name) "
-                    + "values('" + mail + "', '" + pass + "', '"+dispName+"')");
+                    + "values('" + mail + "', '" + pass + "', '" + dispName + "')");
             return true;
         } catch (SQLException ex) {
             ex.printStackTrace();

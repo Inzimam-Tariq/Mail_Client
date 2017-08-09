@@ -46,7 +46,7 @@ public class MainWindowController extends AbstractController implements Initiali
         super(modelAccess);
     }
 
-    ViewFactory viewFactory = ViewFactory.defaultFactory;
+    private ViewFactory viewFactory = ViewFactory.defaultFactory;
 
 //  Manubar related components
     private MenuItem showDetails = new MenuItem("Show Details");
@@ -148,12 +148,13 @@ public class MainWindowController extends AbstractController implements Initiali
 //        if (showSplitView) {
 //            tableAndMsgViewSplit.setDividerPositions(1);
 //        }
+//        downAttchProg.setProgress(ProgressBar.INDETERMINATE_PROGRESS);
         saveAttachmentsService = new SaveAttachmentsService(downProgPanel);
         messageRendererService = new MessageRendererService(messageRenderer.getEngine());
         downAttchProg.progressProperty().bind(saveAttachmentsService.progressProperty());
 
         FolderUpdaterService folderUpdaterService
-                = new FolderUpdaterService(getModelAccess().getFoldersList());
+                = new FolderUpdaterService(getModelAccess().getFoldersList(),downProgPanel,downAttchLbl);
         folderUpdaterService.start();
 
         emailTableView.setRowFactory(e -> new BoldableRowFactory<>());
@@ -171,18 +172,20 @@ public class MainWindowController extends AbstractController implements Initiali
         mailFolderTreeView.setShowRoot(false);
 
         RegisterMailAccountService registerMailAccountService1
-                = new RegisterMailAccountService("inzi.javamailtest@gmail.com",
-                        "******",
+                = new RegisterMailAccountService("jackhunt314@gmail.com",
+                        "Chand-977",
                         rootItem,
-                        getModelAccess());
+                        getModelAccess(),downProgPanel,downAttchLbl,downAttchProg);
         registerMailAccountService1.start();
 
-        RegisterMailAccountService registerMailAccountService2
-                = new RegisterMailAccountService("inzi.programmer@gmail.com",
-                        "*****",
-                        rootItem,
-                        getModelAccess());
+//        RegisterMailAccountService registerMailAccountService2
+//                = new RegisterMailAccountService("inzi.programmer@gmail.com",
+//                        "769inzimam-9771",
+//                        rootItem,
+//                        getModelAccess(),downProgPanel,downAttchLbl,downAttchProg);
 //        registerMailAccountService2.start();
+        downAttchProg.progressProperty().bind(registerMailAccountService1.progressProperty());
+        
         emailTableView.setContextMenu(new ContextMenu(showDetails));
 
         mailFolderTreeView.setOnMouseClicked(e -> {

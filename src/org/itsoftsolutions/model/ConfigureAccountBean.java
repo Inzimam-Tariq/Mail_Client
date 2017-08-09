@@ -17,12 +17,14 @@ public class ConfigureAccountBean {
     private SimpleIntegerProperty id;
     private SimpleStringProperty mailAccId;
     private SimpleStringProperty pass;
+    private SimpleStringProperty serverName;    
     private SimpleStringProperty dispName;    
 
-    public ConfigureAccountBean(int id, String mailAccId, String pass, String dispName) {
+    public ConfigureAccountBean(int id, String mailAccId, String pass, String serverName, String dispName) {
         this.id = new SimpleIntegerProperty(id);
         this.mailAccId = new SimpleStringProperty(mailAccId);
         this.pass = new SimpleStringProperty(pass);
+        this.serverName = new SimpleStringProperty(serverName);
         this.dispName = new SimpleStringProperty(dispName);
     }
 
@@ -36,6 +38,10 @@ public class ConfigureAccountBean {
 
     public String getPass() {
         return pass.get();
+    }
+    
+    public String getServerName() {
+        return serverName.get();
     }
 
     public String getDispName() {

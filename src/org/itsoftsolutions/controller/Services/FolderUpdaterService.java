@@ -8,6 +8,8 @@ package org.itsoftsolutions.controller.Services;
 import java.util.List;
 import javafx.concurrent.Service;
 import javafx.concurrent.Task;
+import javafx.scene.control.Label;
+import javafx.scene.layout.VBox;
 import javax.mail.Folder;
 import javax.mail.MessagingException;
 
@@ -18,9 +20,21 @@ import javax.mail.MessagingException;
 public class FolderUpdaterService extends Service<Void> {
 
     private List<Folder> folderList;
+    private VBox progPanel;
+    private Label downProgLbl;
 
-    public FolderUpdaterService(List<Folder> folderList) {
+    public FolderUpdaterService(List<Folder> folderList,VBox progPanel,Label downProgLbl) {
         this.folderList = folderList;
+        this.progPanel = progPanel;
+        this.downProgLbl = downProgLbl;
+        
+        this.setOnRunning(e -> {
+            downProgLbl.setText("Loading Emails");
+            showProgressBar(true);
+        });
+        this.setOnSucceeded(e -> {
+            showProgressBar(false);
+        });
     }
 
     @Override
@@ -49,5 +63,9 @@ public class FolderUpdaterService extends Service<Void> {
                 }
             }
         };
+    }
+
+    private void showProgressBar(boolean show) {
+        progPanel.setVisible(show);
     }
 }

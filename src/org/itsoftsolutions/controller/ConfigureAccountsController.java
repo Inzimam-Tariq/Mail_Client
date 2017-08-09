@@ -41,6 +41,8 @@ public class ConfigureAccountsController extends AbstractController implements I
     @FXML
     private TableColumn<ConfigureAccountBean, String> colPass;
     @FXML
+    private TableColumn<ConfigureAccountBean, String> colServerName;
+    @FXML
     private TableColumn<ConfigureAccountBean, String> colDisplayName;
 
     @FXML
@@ -50,7 +52,7 @@ public class ConfigureAccountsController extends AbstractController implements I
     @FXML
     private JFXPasswordField passField;
     @FXML
-    private JFXPasswordField reTypePassField;
+    private JFXTextField serverNameField;
     @FXML
     private HBox displayNameBox;
     @FXML
@@ -63,8 +65,8 @@ public class ConfigureAccountsController extends AbstractController implements I
     @FXML
     private JFXButton delAccBtn;
 
-    FetchDBData fetchDBData;
-    final String MAIL_ACC_TABLENAME = "MAIL_ACCOUNTS";
+    private FetchDBData fetchDBData;
+
     private ObservableList<ConfigureAccountBean> data = FXCollections.observableArrayList();
 //            = FXCollections.observableArrayList(
 //                    new ConfigureAccountBean(count++, "inzi769@gmail.com", "12233445", "inzi769"),
@@ -77,26 +79,26 @@ public class ConfigureAccountsController extends AbstractController implements I
     void newAccBtn(ActionEvent event) {
         mailIdField.setText("");
         passField.setText("");
-        reTypePassField.setText("");
+        serverNameField.setText("");
         displayNameField.setText("");
     }
 
     @FXML
     @SuppressWarnings("unchecked")
     void saveAccAction(ActionEvent event) {
-        int rowCount = fetchDBData.getRowCount(MAIL_ACC_TABLENAME);
+        int rowCount = fetchDBData.getRowCount(fetchDBData.getMailAccTableName());
         String mail = mailIdField.getText().toLowerCase().trim();
         String pass = passField.getText().trim();
-        String rePass = reTypePassField.getText().trim();
+        String serverName = serverNameField.getText().trim();
         String name = displayNameField.getText().trim();
-        if (!mail.isEmpty() && !pass.isEmpty() && !rePass.isEmpty()) {
+        if (!mail.isEmpty() && !pass.isEmpty() && !serverName.isEmpty()) {
             boolean isConfigAccSuccess
                     = fetchDBData.configureMailAccount(mail, pass, name);
-            data.add(new ConfigureAccountBean(rowCount + 1, mail, pass, name));
+            data.add(new ConfigureAccountBean(rowCount + 1, mail, pass, serverName, name));
 
             if (isConfigAccSuccess) {
                 JOptionPane.showMessageDialog(null, "mail configure successfull!!");
-            }else{
+            } else {
                 JOptionPane.showMessageDialog(null, "unable to configure mail account");
             }
 
@@ -114,20 +116,22 @@ public class ConfigureAccountsController extends AbstractController implements I
         colId.setCellValueFactory(
                 new PropertyValueFactory<>("id")
         );
-
         colMailId.setCellValueFactory(
                 new PropertyValueFactory<>("mailAccId")
         );
         colPass.setCellValueFactory(
                 new PropertyValueFactory<>("pass")
         );
+        colServerName.setCellValueFactory(
+                new PropertyValueFactory<>("serverName")
+        );
         colDisplayName.setCellValueFactory(
                 new PropertyValueFactory<>("dispName")
         );
         fetchDBData = new FetchDBData();
-        int rowCount = fetchDBData.getRowCount(MAIL_ACC_TABLENAME);
+        int rowCount = fetchDBData.getRowCount(fetchDBData.getMailAccTableName());
         if (rowCount > 0) {
-            ResultSet rs = fetchDBData.getResultSet(MAIL_ACC_TABLENAME);
+            ResultSet rs = fetchDBData.getResultSet(fetchDBData.getMailAccTableName());
             rowCount = 0;
             try {
                 while (rs.next()) {
@@ -135,6 +139,7 @@ public class ConfigureAccountsController extends AbstractController implements I
                     data.add(new ConfigureAccountBean(rowCount,
                             rs.getString("acc_mail"),
                             rs.getString("acc_pass"),
+                            rs.getString("mail_server"),
                             rs.getString("acc_disp_name"))
                     );
                 }

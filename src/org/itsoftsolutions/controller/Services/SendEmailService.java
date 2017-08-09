@@ -6,6 +6,7 @@
 package org.itsoftsolutions.controller.Services;
 
 import java.io.File;
+import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -31,6 +32,7 @@ import javax.mail.internet.MimeBodyPart;
 import javax.mail.internet.MimeMessage;
 import javax.mail.internet.MimeMultipart;
 import javax.swing.JOptionPane;
+import org.itsoftsolutions.controller.helpingClasses.FetchDBData;
 import org.itsoftsolutions.model.EmailAccountBean;
 import org.itsoftsolutions.model.EmailConstants;
 
@@ -42,14 +44,19 @@ public class SendEmailService extends Service<Integer> {
 
     private int result;
     private EmailAccountBean emailAccountBean;
+    private String from;
+    private String pass;
+    private String server;
+    private String host;
     private String subject;
     private String recepient;
     private String content;
     private List<File> attachments = new ArrayList<>();
 
-    public SendEmailService(EmailAccountBean emailAccountBean, String subject, String recepient,
+    public SendEmailService(String from, String subject, String recepient,
             String content, List<File> attachments) {
-        this.emailAccountBean = emailAccountBean;
+//        this.emailAccountBean = emailAccountBean;
+        this.from = from;
         this.subject = subject;
         this.recepient = recepient;
         this.content = content;
@@ -62,19 +69,25 @@ public class SendEmailService extends Service<Integer> {
 
             @Override
             protected Integer call() throws Exception {
+                FetchDBData dbdata = new FetchDBData();
+                JOptionPane.showMessageDialog(null, "before getting data");
+                ResultSet rs = dbdata.getResultSet("TEST", " MAIL_ID = '" + from +"'");
+                if (rs != null) {
+//                    from = rs.getString("mail_id");
+                    pass = rs.getString("mail_pass");
+                    JOptionPane.showMessageDialog(null, pass);
+                    server = rs.getString("server_name");
+                    host = rs.getString("server_addr");
+                }else{
+                    JOptionPane.showMessageDialog(null, "ResultSet = "+rs);
+                }
 
-                String zohoHost = "smtp.zoho.com";
-                String gmailHost = "smtp.gmail.com";
                 String portOther = "587";
-                String mail = "contact@itsoftsolutions.org";
-                String gmail = "inzi.programmer@gmail.com";
-                String passGmail = "769inzimam-9771";
-                String pass = "Chand-977";
 
                 Properties props = new Properties();
                 props.put("mail.smtp.auth", "true");
                 props.put("mail.smtp.starttls.enable", "true");
-                props.put("mail.smtp.host", gmailHost);
+                props.put("mail.smtp.host", host);
                 props.put("mail.smtp.port", portOther);
                 // Get the Session object.
 
@@ -84,13 +97,13 @@ public class SendEmailService extends Service<Integer> {
                             new javax.mail.Authenticator() {
                                 @Override
                                 protected PasswordAuthentication getPasswordAuthentication() {
-                                    return new PasswordAuthentication(gmail, passGmail);
+                                    return new PasswordAuthentication(from, pass);
                                 }
                             });
                     session.setDebug(true);
 
                     Message message = new MimeMessage(session);
-                    message.setFrom(new InternetAddress(gmail, "IT Soft"));
+                    message.setFrom(new InternetAddress(from, "IT Soft"));
                     message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(recepient));
 //                    if (!ccMail.isEmpty()) {
 //                        message.setRecipients(Message.RecipientType.CC, InternetAddress.parse(ccMail));

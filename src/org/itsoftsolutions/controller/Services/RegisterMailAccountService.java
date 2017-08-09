@@ -7,6 +7,9 @@ package org.itsoftsolutions.controller.Services;
 
 import javafx.concurrent.Service;
 import javafx.concurrent.Task;
+import javafx.scene.control.Label;
+import javafx.scene.control.ProgressBar;
+import javafx.scene.layout.VBox;
 import org.itsoftsolutions.controller.ModelAccess;
 import org.itsoftsolutions.model.EmailAccountBean;
 import org.itsoftsolutions.model.EmailConstants;
@@ -22,13 +25,28 @@ public class RegisterMailAccountService extends Service<Integer> {
     private String password;
     private EmailFolderBean<String> folderRoot;
     private ModelAccess modelAccess;
+    private VBox progPanel;
+    private Label downProgLbl;
+    private ProgressBar pb;
 
     public RegisterMailAccountService(String mail, String pass,
-            EmailFolderBean<String> foldRoot, ModelAccess modelAccess) {
+            EmailFolderBean<String> foldRoot, ModelAccess modelAccess
+            , VBox progPanel, Label downProgLbl, ProgressBar pb) {
         this.mailAddress = mail;
         this.password = pass;
         this.folderRoot = foldRoot;
         this.modelAccess = modelAccess;
+        this.progPanel = progPanel;
+        this.downProgLbl = downProgLbl;
+        this.pb = pb;
+
+        this.setOnRunning(e -> {
+            downProgLbl.setText("Getting Started!");
+            showProgressBar(true);
+        });
+        this.setOnSucceeded(e -> {
+            showProgressBar(false);
+        });
     }
 
     @Override
@@ -42,12 +60,19 @@ public class RegisterMailAccountService extends Service<Integer> {
                     EmailFolderBean<String> emailFolderBean = new EmailFolderBean<>(mailAddress);
                     folderRoot.getChildren().add(emailFolderBean);
                     FetchFolderService fetchFolderService = new FetchFolderService(emailAccount,
-                            emailFolderBean, modelAccess);
+                            emailFolderBean, modelAccess,
+                    progPanel,downProgLbl,pb);
+                    pb.progressProperty().bind(fetchFolderService.progressProperty());
                     fetchFolderService.start();
                 }
                 return emailAccount.getLoginState();
             }
         };
+    }
+
+    private void showProgressBar(boolean show) {
+        progPanel.setVisible(show);
+//        pb.setProgress(ProgressBar.INDETERMINATE_PROGRESS);
     }
 
 }

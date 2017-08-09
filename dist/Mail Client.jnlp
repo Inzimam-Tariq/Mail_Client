@@ -8,11 +8,20 @@
   </information>
   <resources>
     <j2se version="1.6+" href="http://java.sun.com/products/autodl/j2se"/>
-    <jar href="Mail_Client.jar" size="75095" download="eager" />
+    <jar href="Mail_Client.jar" size="88986" download="eager" />
+    <jar href="lib/commons-codec-1.10.jar" size="284184" download="eager" />
+    <jar href="lib/commons-collections4-4.1.jar" size="751238" download="eager" />
+    <jar href="lib/commons-logging-1.2.jar" size="61829" download="eager" />
     <jar href="lib/controlsfx-8.40.12.jar" size="996389" download="eager" />
     <jar href="lib/derbyclient.jar" size="585704" download="eager" />
     <jar href="lib/javax.mail-1.5.6.jar" size="608084" download="eager" />
     <jar href="lib/jfoenix-1.0.0.jar" size="2186636" download="eager" />
+    <jar href="lib/junit-4.12.jar" size="314932" download="eager" />
+    <jar href="lib/log4j-1.2.17.jar" size="489884" download="eager" />
+    <jar href="lib/poi-3.16.jar" size="2679259" download="eager" />
+    <jar href="lib/poi-ooxml-3.16.jar" size="1433719" download="eager" />
+    <jar href="lib/poi-ooxml-schemas-3.16.jar" size="5871746" download="eager" />
+    <jar href="lib/xmlbeans-2.6.0.jar" size="2730866" download="eager" />
   </resources>
   <applet-desc  width="800" height="600" main-class="com.javafx.main.NoJavaFXFallback"  name="Mail Client" >
     <param name="requiredFXVersion" value="8.0+"/>

@@ -7,6 +7,9 @@ package org.itsoftsolutions.controller.Services;
 
 import javafx.concurrent.Service;
 import javafx.concurrent.Task;
+import javafx.scene.control.Label;
+import javafx.scene.control.ProgressBar;
+import javafx.scene.layout.VBox;
 import javax.mail.Folder;
 import javax.mail.Message;
 import javax.mail.MessagingException;
@@ -27,15 +30,26 @@ public class FetchFolderService extends Service<Void> {
     private EmailAccountBean emailAccountBean;
     private ModelAccess modelAccess;
     private static int NUMBER_OF_FETCHFOLDERSSERVICES_ACTIVE = 0;
+    private VBox progPanel;
+    private Label downProgLbl;
+    private ProgressBar pb;
 
     public FetchFolderService(EmailAccountBean accountBean, EmailFolderBean<String> foldersRoot,
-            ModelAccess modelAccess) {
+            ModelAccess modelAccess, VBox progPanel, Label downProgLbl, ProgressBar pb) {
         this.emailAccountBean = accountBean;
         this.foldersRoot = foldersRoot;
         this.modelAccess = modelAccess;
+        this.progPanel = progPanel;
+        this.pb = pb;
+        this.downProgLbl = downProgLbl;
 
+        this.setOnRunning(e -> {
+            downProgLbl.setText("Loading Emails Folder");
+            showProgressBar(true);
+        });
         this.setOnSucceeded(e -> {
             NUMBER_OF_FETCHFOLDERSSERVICES_ACTIVE--;
+            showProgressBar(false);
         });
     }
 //    public FetchFolderService(){
@@ -60,7 +74,8 @@ public class FetchFolderService extends Service<Void> {
                         item.setExpanded(true);
                         addMessageListenerToFolder(folder, item);
                         FetchMessagesService fetchMessagesService
-                                = new FetchMessagesService(item, folder);
+                                = new FetchMessagesService(item, folder, progPanel,downProgLbl,pb);
+                    pb.progressProperty().bind(fetchMessagesService.progressProperty());
                         fetchMessagesService.start();
                         System.out.println("Folder: " + folder.getName());
                         Folder subFolders[] = folder.list();
@@ -71,7 +86,8 @@ public class FetchFolderService extends Service<Void> {
                             item.getChildren().add(subItem);
                             addMessageListenerToFolder(subFolder, subItem);
                             FetchMessagesService fetchSubFolderMessagesService
-                                    = new FetchMessagesService(subItem, subFolder);
+                                    = new FetchMessagesService(subItem, subFolder, progPanel,downProgLbl,pb);
+                    pb.progressProperty().bind(fetchMessagesService.progressProperty());
                             fetchSubFolderMessagesService.start();
                             System.out.println("subFolder: " + subFolder.getName());
                         }
@@ -101,5 +117,9 @@ public class FetchFolderService extends Service<Void> {
 
     public static boolean noServiceActive() {
         return NUMBER_OF_FETCHFOLDERSSERVICES_ACTIVE == 0;
+    }
+
+    private void showProgressBar(boolean show) {
+        progPanel.setVisible(show);
     }
 }

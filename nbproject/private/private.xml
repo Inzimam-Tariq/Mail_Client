@@ -5,10 +5,8 @@
         <group>
             <file>file:/C:/Users/Inzimam/Documents/NetBeansProjects/Mail_Client/src/org/itsoftsolutions/controller/MainWindowController.java</file>
             <file>file:/C:/Users/Inzimam/Documents/NetBeansProjects/Mail_Client/src/org/itsoftsolutions/controller/LoginController.java</file>
-            <file>file:/C:/Users/Inzimam/Documents/NetBeansProjects/Mail_Client/src/org/itsoftsolutions/controller/ConfigureAccountsController.java</file>
-            <file>file:/C:/Users/Inzimam/Documents/NetBeansProjects/Mail_Client/src/org/itsoftsolutions/view/ViewFactory.java</file>
-            <file>file:/C:/Users/Inzimam/Documents/NetBeansProjects/Mail_Client/src/org/itsoftsolutions/controller/helpingClasses/FetchDBData.java</file>
-            <file>file:/C:/Users/Inzimam/Documents/NetBeansProjects/Mail_Client/src/org/itsoftsolutions/model/ConfigureAccountBean.java</file>
+            <file>file:/C:/Users/Inzimam/Documents/NetBeansProjects/Mail_Client/src/org/itsoftsolutions/view/login.fxml</file>
+            <file>file:/C:/Users/Inzimam/Documents/NetBeansProjects/Mail_Client/src/org/itsoftsolutions/app/Login.java</file>
         </group>
     </open-files>
 </project-private>
